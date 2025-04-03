@@ -1,11 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import StockTable from '@/components/stock/StockTable';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Database, BarChart3, Table } from 'lucide-react';
+import { Database, BarChart3, Table, Code, GitBranch } from 'lucide-react';
 import TabNav from '@/components/layout/TabNav';
 import { generateMockStockData, stockSymbols, StockData } from '@/utils/mockData';
+import SchemaVisualizer from '@/components/database/SchemaVisualizer';
+import SqlQueryPanel from '@/components/database/SqlQueryPanel';
 
 const DataExplorer = () => {
   const [stockData, setStockData] = useState<StockData[]>([]);
@@ -42,6 +43,16 @@ const DataExplorer = () => {
       id: 'statsView',
       label: 'Statistics',
       icon: <BarChart3 className="h-4 w-4" />,
+    },
+    {
+      id: 'schemaView',
+      label: 'Schema Diagram',
+      icon: <GitBranch className="h-4 w-4" />,
+    },
+    {
+      id: 'sqlView',
+      label: 'SQL Query',
+      icon: <Code className="h-4 w-4" />,
     }
   ];
 
@@ -163,6 +174,14 @@ const DataExplorer = () => {
               )}
             </div>
           </div>
+        )}
+        
+        {activeTab === 'schemaView' && (
+          <SchemaVisualizer symbol={selectedSymbol} />
+        )}
+        
+        {activeTab === 'sqlView' && (
+          <SqlQueryPanel data={stockData} symbol={selectedSymbol} />
         )}
       </div>
     </div>
