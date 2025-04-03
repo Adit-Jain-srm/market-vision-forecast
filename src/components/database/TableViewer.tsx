@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Database, Search, Info } from 'lucide-react';
+import { Database, Search, Info, IndianRupee } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { generateMockStockData, stockSymbols } from '@/utils/mockData';
@@ -16,6 +16,11 @@ const mockTables = {
     { symbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Technology', industry: 'Internet Services', ceo: 'Sundar Pichai', founded_year: 1998 },
     { symbol: 'AMZN', name: 'Amazon.com Inc.', sector: 'Consumer Cyclical', industry: 'Internet Retail', ceo: 'Andy Jassy', founded_year: 1994 },
     { symbol: 'TSLA', name: 'Tesla Inc.', sector: 'Automotive', industry: 'Auto Manufacturers', ceo: 'Elon Musk', founded_year: 2003 },
+    { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.', sector: 'Energy', industry: 'Oil & Gas', ceo: 'Mukesh Ambani', founded_year: 1966 },
+    { symbol: 'TCS', name: 'Tata Consultancy Services Ltd.', sector: 'Technology', industry: 'IT Services', ceo: 'K Krithivasan', founded_year: 1968 },
+    { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', sector: 'Financial Services', industry: 'Banking', ceo: 'Sashidhar Jagdishan', founded_year: 1994 },
+    { symbol: 'INFY', name: 'Infosys Ltd.', sector: 'Technology', industry: 'IT Services', ceo: 'Salil Parekh', founded_year: 1981 },
+    { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd.', sector: 'Communication', industry: 'Telecom', ceo: 'Gopal Vittal', founded_year: 1995 },
   ],
   price_history: (symbol: string) => {
     return generateMockStockData(30, symbol).map((item, index) => ({
@@ -46,6 +51,20 @@ const mockTables = {
       accuracy: (70 + Math.random() * 20).toFixed(2)
     }));
   }
+};
+
+// Function to determine if a stock symbol is from an Indian company
+const isIndianStock = (symbol: string): boolean => {
+  const indianSymbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'BHARTIARTL'];
+  return indianSymbols.includes(symbol);
+};
+
+// Format currency based on stock origin
+const formatCurrency = (value: number, symbol: string): string => {
+  if (isIndianStock(symbol)) {
+    return `₹${value.toFixed(2)}`;
+  }
+  return `$${value.toFixed(2)}`;
 };
 
 interface TableViewerProps {
@@ -135,6 +154,14 @@ const TableViewer = ({ symbol }: TableViewerProps) => {
     );
   });
 
+  // Format cell values based on content type
+  const formatCellValue = (column: string, value: any, row: any): string => {
+    if (['open', 'high', 'low', 'close', 'predicted_price'].includes(column) && row.stock_symbol) {
+      return formatCurrency(parseFloat(value), row.stock_symbol);
+    }
+    return String(value);
+  };
+
   return (
     <div className="bg-app-dark rounded-md border border-muted p-4 animate-fade-in">
       <div className="flex flex-col space-y-4">
@@ -182,10 +209,18 @@ const TableViewer = ({ symbol }: TableViewerProps) => {
                   {(tableDescriptions as any)[selectedTable]}
                 </CardDescription>
               </div>
-              <Button variant="outline" size="sm" className="flex items-center space-x-1">
-                <Info className="h-4 w-4" />
-                <span>Schema</span>
-              </Button>
+              <div className="flex items-center gap-2">
+                {isIndianStock(symbol) && selectedTable !== 'model' && (
+                  <Button variant="outline" size="sm" className="flex items-center space-x-1">
+                    <IndianRupee className="h-4 w-4" />
+                    <span>Indian Stock</span>
+                  </Button>
+                )}
+                <Button variant="outline" size="sm" className="flex items-center space-x-1">
+                  <Info className="h-4 w-4" />
+                  <span>Schema</span>
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
@@ -207,7 +242,7 @@ const TableViewer = ({ symbol }: TableViewerProps) => {
                         <TableRow key={rowIndex}>
                           {tableColumns.map((column) => (
                             <TableCell key={`${rowIndex}-${column}`} className="whitespace-nowrap">
-                              {String(row[column])}
+                              {formatCellValue(column, row[column], row)}
                             </TableCell>
                           ))}
                         </TableRow>

@@ -1,13 +1,20 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import StockTable from '@/components/stock/StockTable';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Database, BarChart3, Table, Code, GitBranch, TableProperties } from 'lucide-react';
+import { Database, BarChart3, Table, Code, GitBranch, TableProperties, IndianRupee } from 'lucide-react';
 import TabNav from '@/components/layout/TabNav';
 import { generateMockStockData, stockSymbols, StockData } from '@/utils/mockData';
 import SchemaVisualizer from '@/components/database/SchemaVisualizer';
 import SqlQueryPanel from '@/components/database/SqlQueryPanel';
 import TableViewer from '@/components/database/TableViewer';
+
+// Function to determine if a stock symbol is from an Indian company
+const isIndianStock = (symbol: string): boolean => {
+  const indianSymbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'BHARTIARTL'];
+  return indianSymbols.includes(symbol);
+};
 
 const DataExplorer = () => {
   const [stockData, setStockData] = useState<StockData[]>([]);
@@ -62,6 +69,11 @@ const DataExplorer = () => {
     }
   ];
 
+  // Format currency based on selected stock
+  const formatCurrency = (value: number): string => {
+    return isIndianStock(selectedSymbol) ? `₹${value.toFixed(2)}` : `$${value.toFixed(2)}`;
+  };
+
   return (
     <div className="min-h-screen bg-app-darker">
       <Navbar onRefresh={refreshData} />
@@ -71,6 +83,12 @@ const DataExplorer = () => {
           <div className="flex items-center mb-4 md:mb-0">
             <Database className="h-6 w-6 mr-2 text-app-blue" />
             <h1 className="text-2xl font-bold">Stock Database Explorer</h1>
+            {isIndianStock(selectedSymbol) && (
+              <span className="ml-2 flex items-center text-sm bg-app-blue/20 text-app-blue px-2 py-0.5 rounded">
+                <IndianRupee className="h-3 w-3 mr-1" />
+                Indian Stock
+              </span>
+            )}
           </div>
           
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
@@ -79,7 +97,14 @@ const DataExplorer = () => {
                 <SelectValue placeholder="Select symbol" />
               </SelectTrigger>
               <SelectContent className="bg-app-dark border-muted">
-                {stockSymbols.map(stock => (
+                <SelectItem value="" disabled className="font-semibold">US Companies</SelectItem>
+                {stockSymbols.slice(0, 5).map(stock => (
+                  <SelectItem key={stock.symbol} value={stock.symbol}>
+                    {stock.symbol} - {stock.name}
+                  </SelectItem>
+                ))}
+                <SelectItem value="" disabled className="font-semibold">Indian Companies</SelectItem>
+                {stockSymbols.slice(5).map(stock => (
                   <SelectItem key={stock.symbol} value={stock.symbol}>
                     {stock.symbol} - {stock.name}
                   </SelectItem>
@@ -124,21 +149,21 @@ const DataExplorer = () => {
                   <div className="bg-muted p-4 rounded-md">
                     <p className="text-sm text-app-gray mb-1">Average Close</p>
                     <p className="text-xl font-medium">
-                      ${(stockData.reduce((acc, day) => acc + day.close, 0) / stockData.length).toFixed(2)}
+                      {formatCurrency(stockData.reduce((acc, day) => acc + day.close, 0) / stockData.length)}
                     </p>
                   </div>
                   
                   <div className="bg-muted p-4 rounded-md">
                     <p className="text-sm text-app-gray mb-1">Highest Price</p>
                     <p className="text-xl font-medium">
-                      ${Math.max(...stockData.map(day => day.high)).toFixed(2)}
+                      {formatCurrency(Math.max(...stockData.map(day => day.high)))}
                     </p>
                   </div>
                   
                   <div className="bg-muted p-4 rounded-md">
                     <p className="text-sm text-app-gray mb-1">Lowest Price</p>
                     <p className="text-xl font-medium">
-                      ${Math.min(...stockData.map(day => day.low)).toFixed(2)}
+                      {formatCurrency(Math.min(...stockData.map(day => day.low)))}
                     </p>
                   </div>
                   

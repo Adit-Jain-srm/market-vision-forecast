@@ -49,6 +49,12 @@ export const generateMockStockData = (days: number = 90, symbol: string = 'AAPL'
     case 'AMZN': basePrice = 140; break;
     case 'GOOGL': basePrice = 130; break;
     case 'TSLA': basePrice = 220; break;
+    // Indian companies
+    case 'RELIANCE': basePrice = 2500; break;
+    case 'TCS': basePrice = 3700; break;
+    case 'HDFCBANK': basePrice = 1600; break;
+    case 'INFY': basePrice = 1450; break;
+    case 'BHARTIARTL': basePrice = 950; break;
     default: basePrice = 100;
   }
   
@@ -65,7 +71,7 @@ export const generateMockStockData = (days: number = 90, symbol: string = 'AAPL'
       const { open, high, low, close } = generateStockPrice(prevClose);
       
       // Generate realistic volume (higher on volatile days)
-      const volumeBase = symbol === 'AAPL' ? 80000000 : 40000000;
+      const volumeBase = ['AAPL', 'RELIANCE', 'TCS'].includes(symbol) ? 80000000 : 40000000;
       const volumeVariation = Math.abs(close - prevClose) / prevClose;
       const volume = Math.round(volumeBase * (1 + volumeVariation * 10));
       
@@ -152,9 +158,16 @@ export const addPredictionToData = (data: StockData[], prediction: number): Stoc
 
 // Generate initial stock symbols for the app
 export const stockSymbols = [
+  // US Companies
   { symbol: 'AAPL', name: 'Apple Inc.' },
   { symbol: 'MSFT', name: 'Microsoft Corporation' },
   { symbol: 'AMZN', name: 'Amazon.com, Inc.' },
   { symbol: 'GOOGL', name: 'Alphabet Inc.' },
   { symbol: 'TSLA', name: 'Tesla, Inc.' },
+  // Indian Companies
+  { symbol: 'RELIANCE', name: 'Reliance Industries Ltd.' },
+  { symbol: 'TCS', name: 'Tata Consultancy Services Ltd.' },
+  { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.' },
+  { symbol: 'INFY', name: 'Infosys Ltd.' },
+  { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd.' }
 ];

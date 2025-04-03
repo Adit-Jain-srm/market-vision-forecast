@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowUpDown, Search, Download } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -20,10 +19,20 @@ interface StockTableProps {
   showPredicted?: boolean;
 }
 
+const isIndianStock = (symbol: string): boolean => {
+  const indianSymbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'BHARTIARTL'];
+  return indianSymbols.includes(symbol);
+};
+
 const StockTable = ({ data, showPredicted = false }: StockTableProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState<keyof StockData>('date');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  
+  const pathname = window.location.pathname;
+  const searchParams = new URLSearchParams(window.location.search);
+  const symbol = searchParams.get('symbol') || 'AAPL';
+  const isIndian = isIndianStock(symbol);
 
   const handleSort = (field: keyof StockData) => {
     if (sortField === field) {
@@ -59,7 +68,7 @@ const StockTable = ({ data, showPredicted = false }: StockTableProps) => {
   });
 
   const formatPrice = (price: number) => {
-    return `$${price.toFixed(2)}`;
+    return isIndian ? `₹${price.toFixed(2)}` : `$${price.toFixed(2)}`;
   };
 
   const formatVolume = (volume: number) => {
@@ -96,7 +105,7 @@ const StockTable = ({ data, showPredicted = false }: StockTableProps) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `stock_data_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `stock_data_${symbol}_${new Date().toISOString().split('T')[0]}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
