@@ -30,8 +30,10 @@ const ModelTrainer = ({ onModelTrained, isLoading, setIsLoading }: ModelTrainerP
       setModelTrained(true);
       onModelTrained(accuracy);
       setIsLoading(false);
-      toast.success("Model training completed successfully", {
-        description: `Model trained with ${accuracy.toFixed(2)}% accuracy.`
+      toast({
+        title: "Model training completed successfully",
+        description: `Model trained with ${accuracy.toFixed(2)}% accuracy.`,
+        variant: "default",
       });
     }, 2000);
   };
@@ -39,8 +41,10 @@ const ModelTrainer = ({ onModelTrained, isLoading, setIsLoading }: ModelTrainerP
   const resetModel = () => {
     setModelAccuracy(null);
     setModelTrained(false);
-    toast.info("Model has been reset", {
-      description: "You can train a new model with different parameters."
+    toast({
+      title: "Model has been reset",
+      description: "You can train a new model with different parameters.",
+      variant: "default",
     });
   };
 
