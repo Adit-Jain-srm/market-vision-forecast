@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import StockTable from '@/components/stock/StockTable';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Database, BarChart3, Table, Code, GitBranch } from 'lucide-react';
+import { Database, BarChart3, Table, Code, GitBranch, TableProperties } from 'lucide-react';
 import TabNav from '@/components/layout/TabNav';
 import { generateMockStockData, stockSymbols, StockData } from '@/utils/mockData';
 import SchemaVisualizer from '@/components/database/SchemaVisualizer';
 import SqlQueryPanel from '@/components/database/SqlQueryPanel';
+import TableViewer from '@/components/database/TableViewer';
 
 const DataExplorer = () => {
   const [stockData, setStockData] = useState<StockData[]>([]);
@@ -43,6 +44,11 @@ const DataExplorer = () => {
       id: 'statsView',
       label: 'Statistics',
       icon: <BarChart3 className="h-4 w-4" />,
+    },
+    {
+      id: 'dbTablesView',
+      label: 'DB Tables',
+      icon: <TableProperties className="h-4 w-4" />,
     },
     {
       id: 'schemaView',
@@ -174,6 +180,10 @@ const DataExplorer = () => {
               )}
             </div>
           </div>
+        )}
+        
+        {activeTab === 'dbTablesView' && (
+          <TableViewer symbol={selectedSymbol} />
         )}
         
         {activeTab === 'schemaView' && (
