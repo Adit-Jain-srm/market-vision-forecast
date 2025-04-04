@@ -55,6 +55,12 @@ export const generateMockStockData = (days: number = 90, symbol: string = 'AAPL'
     case 'HDFCBANK': basePrice = 1600; break;
     case 'INFY': basePrice = 1450; break;
     case 'BHARTIARTL': basePrice = 950; break;
+    // Additional Indian companies
+    case 'WIPRO': basePrice = 450; break;
+    case 'TATASTEEL': basePrice = 120; break;
+    case 'BAJFINANCE': basePrice = 6800; break;
+    case 'ASIANPAINT': basePrice = 3200; break;
+    case 'MARUTI': basePrice = 9800; break;
     default: basePrice = 100;
   }
   
@@ -169,5 +175,11 @@ export const stockSymbols = [
   { symbol: 'TCS', name: 'Tata Consultancy Services Ltd.' },
   { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.' },
   { symbol: 'INFY', name: 'Infosys Ltd.' },
-  { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd.' }
+  { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd.' },
+  // Additional Indian Companies
+  { symbol: 'WIPRO', name: 'Wipro Ltd.' },
+  { symbol: 'TATASTEEL', name: 'Tata Steel Ltd.' },
+  { symbol: 'BAJFINANCE', name: 'Bajaj Finance Ltd.' },
+  { symbol: 'ASIANPAINT', name: 'Asian Paints Ltd.' },
+  { symbol: 'MARUTI', name: 'Maruti Suzuki India Ltd.' }
 ];

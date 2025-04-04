@@ -12,7 +12,7 @@ import TableViewer from '@/components/database/TableViewer';
 
 // Function to determine if a stock symbol is from an Indian company
 const isIndianStock = (symbol: string): boolean => {
-  const indianSymbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'BHARTIARTL'];
+  const indianSymbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'BHARTIARTL', 'WIPRO', 'TATASTEEL', 'BAJFINANCE', 'ASIANPAINT', 'MARUTI'];
   return indianSymbols.includes(symbol);
 };
 
