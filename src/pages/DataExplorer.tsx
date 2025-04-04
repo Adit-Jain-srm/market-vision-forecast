@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import StockTable from '@/components/stock/StockTable';
@@ -97,13 +96,13 @@ const DataExplorer = () => {
                 <SelectValue placeholder="Select symbol" />
               </SelectTrigger>
               <SelectContent className="bg-app-dark border-muted">
-                <SelectItem value="" disabled className="font-semibold">US Companies</SelectItem>
+                <SelectItem value="us-section" disabled className="font-semibold">US Companies</SelectItem>
                 {stockSymbols.slice(0, 5).map(stock => (
                   <SelectItem key={stock.symbol} value={stock.symbol}>
                     {stock.symbol} - {stock.name}
                   </SelectItem>
                 ))}
-                <SelectItem value="" disabled className="font-semibold">Indian Companies</SelectItem>
+                <SelectItem value="india-section" disabled className="font-semibold">Indian Companies</SelectItem>
                 {stockSymbols.slice(5).map(stock => (
                   <SelectItem key={stock.symbol} value={stock.symbol}>
                     {stock.symbol} - {stock.name}
