@@ -1,74 +1,83 @@
-# Welcome to your Lovable project
+Market Vision Forecast
 
-## Project info
+Market Vision Forecast is a full-stack web application that enables users to explore, analyze, and forecast stock data using database systems and machine learning. Built with modern frontend and backend technologies, this project offers a real-time dashboard to visualize and predict stock price trends.
 
-**Live at**: preview--market-vision-forecast.lovable.app
-**URL**: https://lovable.dev/projects/c6290dc5-70d6-4f89-b3fd-4cbce54b15ae
+🔗 Live Preview: Market Vision Forecast📁 Project URL: Lovable Project
 
-## How can I edit this code?
+📉 Features
 
-There are several ways of editing your application.
+✨ Stock Database Explorer – Browse, filter, and export historical stock data
 
-**Use Lovable**
+📊 Visual Price History – Interactive chart for trend analysis
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c6290dc5-70d6-4f89-b3fd-4cbce54b15ae) and start prompting.
+🤖 ML Model Training – Train a regression model on historic prices
 
-Changes made via Lovable will be committed automatically to this repo.
+🔢 Entity-Relationship Viewer – Inspect the DB schema and relationships
 
-**Use your preferred IDE**
+🌎 Web-based UI – Built with React, Tailwind CSS, and shadcn-ui components
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🌐 Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Frontend: Vite + React + TypeScript + Tailwind CSS + shadcn-ui
 
-Follow these steps:
+Backend: Python (Flask)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+Database: SQLite (Local)
+
+ML Models: scikit-learn (Linear Regression, Random Forest)
+
+⚙️ Local Development
+
+Clone & Install
+
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Run Dev Server
+
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+🚀 Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+To deploy your app:
 
-**Use GitHub Codespaces**
+Go to your Lovable Project
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Click Share > Publish to deploy changes.
 
-## What technologies are used for this project?
+Custom Domains
 
-This project is built with:
+To link a domain:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Go to Project > Settings > Domains
 
-## How can I deploy this project?
+Click Connect Domain and follow the instructions
 
-Simply open [Lovable](https://lovable.dev/projects/c6290dc5-70d6-4f89-b3fd-4cbce54b15ae) and click on Share -> Publish.
+🔍 Explore the Database
 
-## Can I connect a custom domain to my Lovable project?
+ER Diagram
 
-Yes it is!
+Stock(symbol, name, sector, industry, ceo, founded_year)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+PriceHistory(id, stock_symbol, date, open, high, low, close, volume)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Model(id, name, algorithm, created_at, parameters, accuracy)
+
+Prediction(id, stock_symbol, date, predicted_price, model_id, accuracy)
+
+Relationships
+
+Stock 1-N PriceHistory
+
+Stock 1-N Prediction
+
+Model 1-N Prediction
+
+✅ Future Improvements
+
+Real-time stock data feed (API integration)
+
+User authentication for personalized predictions
+
+More advanced ML algorithms with model comparisons
