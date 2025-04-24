@@ -2,6 +2,7 @@
 
 ## Project info
 
+**Live at**: preview--market-vision-forecast.lovable.app
 **URL**: https://lovable.dev/projects/c6290dc5-70d6-4f89-b3fd-4cbce54b15ae
 
 ## How can I edit this code?
