@@ -3,6 +3,7 @@ Market Vision Forecast
 Market Vision Forecast is a full-stack web application that enables users to explore, analyze, and forecast stock data using database systems and machine learning. Built with modern frontend and backend technologies, this project offers a real-time dashboard to visualize and predict stock price trends.
 
 🔗 Live Preview: Market Vision Forecast📁 Project URL: Lovable Project
+https://preview--market-vision-forecast.lovable.app
 
 📉 Features
 
